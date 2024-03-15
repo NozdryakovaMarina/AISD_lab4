@@ -3,6 +3,5 @@
 using namespace trees;
 
 int main() {
-
 	return 0;
 }
