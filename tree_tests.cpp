@@ -74,3 +74,12 @@ TEST(SetTest, eraseTest2) {
 	x.print();
 	EXPECT_EQ(a, false);
 }
+
+TEST(UnionTest, setUnion) {
+	Set<int> x;
+	x.insert(5);
+	x.insert(6);
+	x.insert(5);
+	x.insert(1);
+
+}

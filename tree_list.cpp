@@ -3,28 +3,29 @@
 #include <iostream>
 #include <stdexcept>
 #include <random>
+#include <functional>
 
 using namespace std;
 
 namespace trees {
 	template<typename T>
-	struct Node { 
+	struct Node {
 		T val;
 		Node<T>* left;
 		Node<T>* right;
 
-		Node(): val(0), left(nullptr), right(nullptr) {}
-		Node(T v): val(v), left(nullptr), right(nullptr) {}
+		Node() : val(0), left(nullptr), right(nullptr) {}
+		Node(T v) : val(v), left(nullptr), right(nullptr) {}
 	};
 
 	template<typename T>
 	class Set {
 	private:
-		Node<T>* _root; 
+		Node<T>* _root;
 
 		Node<T>* copy(Node<T>* node) {
 			if (node) {
-				Node<T>* new_node = new Node<T>(node->data);
+				Node<T>* new_node = new Node<T>(node->val);
 				new_node->left = copy(node->left);
 				new_node->right = copy(node->right);
 				return new_node;
@@ -79,21 +80,14 @@ namespace trees {
 
 			else if (node->val < key) return erase(node->right, key);
 			else {
-				if (!node->left) {
-					Node<T>* tmp = node->left;
-					delete node;
-					node = tmp;
-				}
-				else if (!node->right) {
-					Node<T>* tmp = node->right;
-					delete node;
-					node = tmp;
+				if (!node->left || !node->right) {
+					Node<T>* tmp = node;
+					node = (node->left) ? node->left : node->right;
+					delete tmp;
 				}
 				else {
 					Node<T>* tmp = node->right;
-					while (tmp->left) {
-						tmp = tmp->left;
-					}
+					while (tmp->left) tmp = tmp->left;
 					node->val = tmp->val;
 					erase(node->right, tmp->val);
 				}
@@ -102,7 +96,7 @@ namespace trees {
 		}
 
 	public:
-		Set(): _root(nullptr){}
+		Set() : _root(nullptr) {}
 
 		Set(const Set<T>& other) {
 			_root = copy(other._root);
@@ -138,4 +132,34 @@ namespace trees {
 			return erase(_root, key);
 		}
 	};
-  };
+
+	int random(int a, int b) {
+		random_device random_device;
+		mt19937 generator(random_device());
+		uniform_int_distribution<> segment(a, b);
+		int x = segment(generator);
+		return x;
+	}
+
+	int random_seed(int a, int b, int seed) {
+		mt19937 generator(seed);
+		uniform_int_distribution<> segment(a, b);
+		int x = segment(generator);
+		return x;
+	}
+
+	template<typename T>
+	void delete_identical_items(Set<T>& set, Node<T>* node) {
+		if (node) {
+			delete_identical_items(set, node->left);
+			if (set.contains(node->val)) set.erase(node->val);
+			delete_identical_items(set, node->right);
+		}
+	}
+
+	template<typename T>
+	Set<T> union_set(const Set<T>& set1, const Set<T>& set2) {
+		Set<T> res;
+		return res;
+	}
+};
