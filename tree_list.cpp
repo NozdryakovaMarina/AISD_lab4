@@ -158,37 +158,31 @@ namespace trees {
 	}
 
 	template<typename T>
-	Set<T> change_set(Set<T>& set1, Set<T>& set2) {
+	Set<T> union_set(Set<T>& set1, Set<T>& set2) {
 		Set<T> set(set1);
 		add_new_items(set, set2.get_root());
 		return set;
 	}
 
 	template<typename T>
-	Set<T> union_set(Set<T>& set1, Set<T>& set2) {
-		Set<T> res = change_set(set1, set2);;
-		return change_set(set1, set2);
-	}
-
-	template<typename T>
 	void delete_identical_items(Set<T>& set, Node<T>* node) {
 		if (node) {
 			delete_identical_items(set, node->left);
-			if (set.contains(node->val) == set.contains(set.get_root()->val)) set.erase(node->val);
+			if (set.contains(node->val)) set.erase(node->val);
 			delete_identical_items(set, node->right);
 		}
 	}
 
 	template<typename T>
-	Set<T> change_set2(Set<T>& set1, Set<T>& set2) {
+	Set<T> difference_set(Set<T>& set1, Set<T>& set2) {
 		Set<T> set(set1);
 		delete_identical_items(set, set2.get_root());
 		return set;
 	}
 
 	template<typename T>
-	Set<T> difference_set(Set<T>& set1, Set<T>& set2) {
-		Set<T> res = change_set2(set1, set2);;
-		return change_set2(set1, set2);
+	Set<T> intersec_set(Set<T>& set1, Set<T>& set2) {
+		Set<T> res = difference_set(set1, set2);
+		return difference_set(set1, res);
 	}
-};
+}

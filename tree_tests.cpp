@@ -75,6 +75,20 @@ TEST(SetTest, eraseTest2) {
 	EXPECT_EQ(a, false);
 }
 
+TEST(SetTest, eraseTest3) {
+	Set<int> x;
+	x.insert(5);
+	x.insert(6);
+	x.insert(1);
+	x.insert(4);
+	x.insert(3);
+	x.insert(2);
+	x.insert(70);
+	bool a = x.erase(1);
+	x.print();
+	EXPECT_EQ(a, true);
+}
+
 TEST(UnionTest, setUnion) {
 	Set<int> x;
 	x.insert(5);
@@ -138,3 +152,35 @@ TEST(DifferenceTest, setDifference2) {
 	z = difference_set(y, x);
 	z.print();
 }
+
+TEST(IntersecTest, setIntersec) {
+	Set<int> x;
+	x.insert(3);
+	x.insert(-4);
+	x.insert(77);
+
+	Set<int> y;
+	y.insert(-4);
+	y.insert(3);
+	y.insert(7);
+
+	Set<int> k = intersec_set(x, y);
+	k.print();
+}
+
+//TEST(IntersecTest, setIntersec2) {
+//	Set<int> x;
+//	x.insert(3);
+//	x.insert(4);
+//	x.insert(77);
+//
+//	Set<int> y;
+//	y.insert(-4);
+//	y.insert(3);
+//	y.insert(7);
+//
+//	Set<int> z;
+//	z = change_set3(x, y);
+//	z.print();
+//}
+
