@@ -170,5 +170,25 @@ namespace trees {
 		return change_set(set1, set2);
 	}
 
-	 
+	template<typename T>
+	void delete_identical_items(Set<T>& set, Node<T>* node) {
+		if (node) {
+			delete_identical_items(set, node->left);
+			if (set.contains(node->val) == set.contains(set.get_root()->val)) set.erase(node->val);
+			delete_identical_items(set, node->right);
+		}
+	}
+
+	template<typename T>
+	Set<T> change_set2(Set<T>& set1, Set<T>& set2) {
+		Set<T> set(set1);
+		delete_identical_items(set, set2.get_root());
+		return set;
+	}
+
+	template<typename T>
+	Set<T> difference_set(Set<T>& set1, Set<T>& set2) {
+		Set<T> res = change_set2(set1, set2);;
+		return change_set2(set1, set2);
+	}
 };

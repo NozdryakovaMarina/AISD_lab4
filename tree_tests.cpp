@@ -107,3 +107,34 @@ TEST(UnionTest, setUnion2) {
 	z.print();
 }
 
+TEST(DifferenceTest, setDifference) {
+	Set<int> x;
+	x.insert(5);
+	x.insert(-4);
+	x.insert(6);
+
+	Set<int> y;
+	y.insert(-4);
+	y.insert(6);
+	y.insert(70);
+
+	Set<int> z;
+	z = difference_set(x, y);
+	z.print();
+}
+
+TEST(DifferenceTest, setDifference2) {
+	Set<int> x;
+	x.insert(5);
+	x.insert(-4);
+	x.insert(6);
+
+	Set<int> y;
+	y.insert(4);
+	y.insert(6);
+	y.insert(70);
+
+	Set<int> z;
+	z = difference_set(y, x);
+	z.print();
+}
