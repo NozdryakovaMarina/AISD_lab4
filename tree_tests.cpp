@@ -78,8 +78,32 @@ TEST(SetTest, eraseTest2) {
 TEST(UnionTest, setUnion) {
 	Set<int> x;
 	x.insert(5);
+	x.insert(-4);
 	x.insert(6);
-	x.insert(5);
-	x.insert(1);
 
+	Set<int> y;
+	y.insert(5);
+	y.insert(6);
+	y.insert(70);
+
+	Set<int> z;
+	z = union_set(x, y);
+	z.print();
 }
+
+TEST(UnionTest, setUnion2) {
+	Set<int> x;
+	x.insert(10);
+	x.insert(0);
+	x.insert(6);
+
+	Set<int> y;
+	y.insert(5);
+	y.insert(0);
+	y.insert(70);
+
+	Set<int> z;
+	z = union_set(x, y);
+	z.print();
+}
+
